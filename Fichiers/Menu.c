@@ -19,6 +19,8 @@ void TailleJeux() {
 }
 
 int main(void) {
+    int positionSourisX;
+    int positionSourisY;
     
     InitialiserGraphique();
     
@@ -30,8 +32,8 @@ int main(void) {
     while (1) {
         if (SourisCliquee()) {
             SourisPosition(); //   Avoir pstion dla souris
-            int positionSourisX = _X; // trouve X et retient sa pstion aub moment du clic
-            int positionSourisY = _Y; // trouve Y au moment du clic
+            positionSourisX = _X; // trouve X et retient sa pstion aub moment du clic
+            positionSourisY = _Y; // trouve Y au moment du clic
 
           
             for (taille = 3; taille <= 9; taille++) { ///Revenir au 6 choix 
