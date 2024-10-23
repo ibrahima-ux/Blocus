@@ -48,7 +48,7 @@ void TailleJeux() {
 
     // Ajt Bouton 
     int boutonX = 300; 
-    int boutonY = 400; 
+    int boutonY = 450; 
     int boutonLargeur = 150; 
     int boutonHauteur = 50; 
 
@@ -62,7 +62,7 @@ void TailleJeux() {
     char *texte = "Commencer"; 
     int largeurTexte = TailleChaineEcran(texte, 2); 
     int texteX = boutonX + (boutonLargeur / 2) - (largeurTexte / 2); 
-    int texteY = boutonY + (boutonHauteur / 2) - (TailleSupPolice(2) / 2); 
+    int texteY = boutonY + boutonHauteur - (TailleSupPolice(2) / 2); 
     EcrireTexte(texteX, texteY, texte, 2); 
 }
 
