@@ -1,15 +1,43 @@
-#include "Blocus.h" 
+#include "Blocus.h"
 
-void AfficheImageFond() {
-   
-    ChargerImageFond("Image1.jpg"); //jarrive pas 
+int fondMenu;
+int fondJeu1;
+int fondJeu2;
+
+/*Jarrive pas a mettres le simages*/
+
+void chargerSprites() {
+    fondMenu = ChargerSprite(IMAGE_MENU);   
+    fondJeu1 = ChargerSprite(IMAGE_FOND1);  
+    fondJeu2 = ChargerSprite(IMAGE_FOND2);  
+}
+
+void afficherFondMenu() {
+    EffacerEcran(CouleurParNom("white")); 
+    AfficherSprite(fondMenu, 0, 0); 
+}
+
+void afficherFondJeu1() {
+    EffacerEcran(CouleurParNom("white"));
+    AfficherSprite(fondJeu1, 0, 0); 
+}
+
+void afficherFondJeu2() {
+    EffacerEcran(CouleurParNom("white")); 
+    AfficherSprite(fondJeu2, 0, 0); 
+}
+
+void libererSprites() {
+    
+    LibererSprite(fondMenu);
+    LibererSprite(fondJeu1);
+    LibererSprite(fondJeu2);
 }
 
 void TailleJeux() {
-   
-    EffacerEcran(CouleurParNom("Green")); 
+    afficherFondMenu(); 
 
-    EcrireTexte(100, 50, "Choisissez la taille de la grille :", 2); 
+    EcrireTexte(100, 50, "Choisissez la taille de la grille :", 2);
 
     for (int i = 0; i < MAX_OPTIONS; i++) {
         int taille = i + 3; 
@@ -19,8 +47,7 @@ void TailleJeux() {
         int caseY = optionY - 5; 
         int caseSize = 20; 
 
-       
-        ChoisirCouleurDessin(CouleurParNom("lightgray"));
+        ChoisirCouleurDessin(CouleurParNom("purple"));
         RemplirRectangle(caseX, caseY, caseSize, caseSize);
         if (casesCochees[i]) { 
             ChoisirCouleurDessin(CouleurParNom("red")); 
@@ -34,7 +61,7 @@ void TailleJeux() {
         EcrireTexte(optionX, optionY, optionText, 2); 
     }
 
-    // Ajt "COMMENCER"
+    // Ajout "COMMENCER"
     int boutonLargeur = LARGEUR_BOUTON; 
     int boutonHauteur = HAUTEUR_BOUTON; 
     int boutonX = (LARGEUR_FENETRE - boutonLargeur) / 2; // Centrer 
@@ -52,4 +79,6 @@ void TailleJeux() {
     int texteX = boutonX + (boutonLargeur / 2) - (largeurTexte / 2); 
     int texteY = boutonY + (boutonHauteur / 2) - (TailleSupPolice(2) / 2); 
     EcrireTexte(texteX, texteY, texte, 2); 
+
+    afficherOptionsJoueurs(); 
 }
