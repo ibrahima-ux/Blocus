@@ -12,6 +12,7 @@ void initialiserJeu(int taille) {
 }
 
 void afficherGrille(int taille) {
+
     int x_start = (LARGEUR_FENETRE - (taille * 50)) / 2; // centrer 
     int y_start = 100; // du bord de la fnetre ala grille Y
     int cell_size = 50; 
