@@ -5,28 +5,28 @@ int casesCochees[MAX_OPTIONS] = {0};
 int modeJeu = 0;
 
 int main(void) {
-    int positionSourisX; 
+    int positionSourisX;
     int positionSourisY;
 
-    
     if (InitialiserGraphique() == -1) {
         fprintf(stderr, "Erreur lors de l'initialisation graphique.\n");
         return EXIT_FAILURE;
     }
 
-   
-    CreerFenetre(20, 20, LARGEUR_FENETRE, HAUTEUR_FENETRE); 
+    CreerFenetre(20, 20, LARGEUR_FENETRE, HAUTEUR_FENETRE);
 
-    // Charger fonds
-    chargerSprites(); 
-    afficherFondMenu(); 
-    TailleJeux(); // Afficher les options de taille
+    // Charger les sprites pour le menu et les jeux
+    chargerSprites();
+
+    // Afficher l'image de fond du menu
+    afficherFondMenu();
+    TailleJeux();
 
     while (1) {
         if (SourisCliquee()) {
-            SourisPosition(); 
-            positionSourisX = _X; 
-            positionSourisY = _Y; 
+            SourisPosition();
+            positionSourisX = _X;
+            positionSourisY = _Y;
 
             // Gérer les interactions
             gererInteractions(positionSourisX, positionSourisY);
@@ -34,9 +34,9 @@ int main(void) {
         }
     }
 
-    libererSprites(); 
-    FermerGraphique(); 
-    return 0; 
+    libererSprites();
+    FermerGraphique();
+    return 0;
 }
 void afficherGrilleSiValidee(int positionSourisX, int positionSourisY) {
     int boutonX = (LARGEUR_FENETRE - LARGEUR_BOUTON) / 2; // Position X du bouton

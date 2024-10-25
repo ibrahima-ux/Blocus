@@ -12,10 +12,9 @@
 #define LARGEUR_BOUTON (LARGEUR_FENETRE / 4) 
 #define HAUTEUR_BOUTON 50        
 
-
-#define IMAGE_MENU "ImageMenu.jpg"   
-#define IMAGE_FOND1 "ImageFond1.jpg"  
-#define IMAGE_FOND2 "ImageFond2.jpg"  
+#define IMAGE_MENU "ImageFond1.jpeg"   
+#define IMAGE_FOND1 "ImageFond2.jpeg"
+#define IMAGE_FOND2 "ImageFond2.jpeg"  
 
 extern char grille[MAX_TAILLE][MAX_TAILLE]; 
 

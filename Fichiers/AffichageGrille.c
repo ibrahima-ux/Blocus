@@ -10,8 +10,10 @@ void afficherGrilleJeu(int taille) {
     int x_start = (LARGEUR_FENETRE - totalWidth) / 2; 
     int y_start = (HAUTEUR_FENETRE - totalHeight) / 2; 
 
-    for (int i = 0; i < taille; i++) {
-        for (int j = 0; j < taille; j++) {
+    int i, j;
+    
+    for (i = 0; i < taille; i++) {
+        for (j = 0; j < taille; j++) {
             
             ChoisirCouleurDessin(CouleurParNom("white")); 
             RemplirRectangle(x_start + j * cell_size, y_start + i * cell_size, cell_size, cell_size); 

@@ -8,13 +8,13 @@ void afficherOptionsJoueurs() {
     ChoisirCouleurDessin(modeJeu == 1 ? CouleurParNom("red") : CouleurParNom("lightgray"));
     RemplirRectangle(LARGEUR_FENETRE * 0.75, optionY, LARGEUR_FENETRE * 0.2, 40); // Ajustez la position
     ChoisirCouleurDessin(CouleurParNom("black"));
-    EcrireTexte(LARGEUR_FENETRE * 0.75 + 10, optionY + 10, "1 Joueur", 2); // centré
+    EcrireTexte(LARGEUR_FENETRE * 0.75 + 35, optionY + 30, "1 Joueur", 2); // centré
 
     // Cadre  "2 Joueurs"
     ChoisirCouleurDessin(modeJeu == 2 ? CouleurParNom("red") : CouleurParNom("lightgray"));
     RemplirRectangle(LARGEUR_FENETRE * 0.75, optionY + 50, LARGEUR_FENETRE * 0.2, 40); 
     ChoisirCouleurDessin(CouleurParNom("black"));
-    EcrireTexte(LARGEUR_FENETRE * 0.75 + 10, optionY + 60, "2 Joueurs", 2); 
+    EcrireTexte(LARGEUR_FENETRE * 0.75 + 35, optionY + 80, "2 Joueurs", 2); 
 }
 
 void gererChoixJoueurs(int positionSourisX, int positionSourisY) {
