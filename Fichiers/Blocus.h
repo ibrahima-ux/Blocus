@@ -21,14 +21,22 @@ extern char grille[MAX_TAILLE][MAX_TAILLE];
 // Variables globales
 extern int choisirTaille;           
 extern int casesCochees[MAX_OPTIONS]; 
-extern int modeJeu;                 
+extern int modeJeu;         
+extern int spriteCroixBleue;
+extern int spritePionBleu;
+extern int spriteCroixRouge;
+extern int spritePionRouge;        
+extern int etapePlacement;
+extern int tourJoueur;
 
 // Déclaration des fonctions
 void initialiserJeu(int taille);         
 void afficherGrille(int taille);        
 void afficherGrilleJeu(int taille);    
 void chargerSprites();                  
-void libererSprites();                 
+void libererSprites();    
+void chargerSpritesPions();
+void libererSpritesPions();             
 void afficherFondMenu();                
 void afficherFondJeu1();                
 void afficherFondJeu2();                
@@ -37,5 +45,20 @@ void gererInteractions(int positionSourisX, int positionSourisY);
 void afficherOptionsJoueurs();          
 void gererChoixJoueurs(int positionSourisX, int positionSourisY); 
 void afficherGrilleSiValidee(int positionSourisX, int positionSourisY); 
+void mettreAJourCase(int x, int y);
 
+void afficherMessageGraphique(const char *message);
+void deplacerPion(int joueur, int *x, int *y, int newX, int newY);
+void condamnerCase(int x, int y);
+int deplacementPossible(int x, int y, int taille);
+int estPartieTerminee(int joueurX, int joueurY, int taille);
+void mouvementIA(int *x, int *y, int taille);  // Fonction pour l’IA
+// Déclaration des fonctions pour gérer les interactions
+void placerSpritePion(int ligne, int colonne, char type, int joueur, int taille);
+void gererClicGrille(int positionSourisX, int positionSourisY, int joueur, int taille);
+
+
+// Déclarations des nouvelles fonctions
+void jouerContreBot(int *joueurX, int *joueurY, int taille);
+void jouerDeuxJoueurs(int *joueurX1, int *joueurY1, int *joueurX2, int *joueurY2, int taille);
 #endif 
