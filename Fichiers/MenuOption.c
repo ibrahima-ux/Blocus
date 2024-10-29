@@ -51,7 +51,27 @@ void mouvementIA(int *x, int *y, int taille) {
         blockY = rand() % taille;
     } while (grille[blockX][blockY] != ' ');
     condamnerCase(blockX, blockY);
+    if (estPartieTerminee(*x, *y, taille)) {
+    afficherScore(1);  // Si le joueur 1 est bloqué
 }
-int estPartieTerminee(int joueurX, int joueurY, int taille) {
-    return !deplacementPossible(joueurX, joueurY, taille);
+}
+int estPartieTerminee(int x, int y, int taille) {
+    int dx[] = {-1, -1, -1, 0, 0, 1, 1, 1};  // Déplacements en x pour les 8 directions
+    int dy[] = {-1, 0, 1, -1, 1, -1, 0, 1};  // Déplacements en y pour les 8 directions
+
+    for (int i = 0; i < 8; i++) {
+        int newX = x + dx[i];
+        int newY = y + dy[i];
+
+        // Vérifie que la case adjacente est dans les limites de la grille
+        if (newX >= 0 && newX < taille && newY >= 0 && newY < taille) {
+            // Si une case adjacente est libre, le joueur n'est pas bloqué
+            if (grille[newX][newY] == ' ') {
+                return 0;  // Déplacement possible, partie non terminée
+            }
+        }
+    }
+
+    // Si aucune case adjacente libre, le joueur est bloqué
+    return 1;
 }
