@@ -91,41 +91,94 @@ void placerSpritePion(int ligne, int colonne, char type, int joueur, int taille)
         }
     }
 }
-
 void gererClicGrille(int positionSourisX, int positionSourisY, int joueur, int taille) {
     int cell_size = 50;
-    int sprite_size = 25;  // Taille des sprites
+    int sprite_size = 25;
     int x_start = (LARGEUR_FENETRE - (taille * cell_size)) / 2;
     int y_start = (HAUTEUR_FENETRE - (taille * cell_size)) / 2;
 
     int colonne = (positionSourisX - x_start) / cell_size;
     int ligne = (positionSourisY - y_start) / cell_size;
 
+    // Vérifie si la position cliquée est dans les limites de la grille
     if (ligne >= 0 && ligne < taille && colonne >= 0 && colonne < taille) {
-        if (grille[ligne][colonne] == ' ') {  // Vérifie si la case est vide
-            int x = x_start + colonne * cell_size + (cell_size - sprite_size) / 2;
-            int y = y_start + ligne * cell_size + (cell_size - sprite_size) / 2;
+        if (etapePlacement == 1) {  // Déplacement du pion
+            if (grille[ligne][colonne] == ' ') {  // Vérifie que la case est libre
+                // Efface la position précédente du pion graphiquement si elle ne contient pas une croix
+                int oldX, oldY;
+                if (joueur == 1) {
+                    oldX = joueur1X;
+                    oldY = joueur1Y;
+                    joueur1X = ligne;  // Met à jour la nouvelle position de Joueur 1
+                    joueur1Y = colonne;
+                    grille[ligne][colonne] = 'P';  // Place le pion à la nouvelle position
 
-            if (etapePlacement == 1) {  // Placement de la croix
-                grille[ligne][colonne] = (joueur == 1) ? 'C' : 'c';  // Marque la case avec la croix
+                    // Efface l'ancienne position si nécessaire
+                    if (grille[oldX][oldY] != 'X' && (oldX != joueur1X || oldY != joueur1Y)) {
+                        grille[oldX][oldY] = ' ';  // Vide l'ancienne case
+                        ChoisirCouleurDessin(CouleurParNom("white"));
+                        RemplirRectangle(x_start + oldY * cell_size, y_start + oldX * cell_size, cell_size, cell_size);
+                        // Redessine la bordure de la case
+                        ChoisirCouleurDessin(CouleurParNom("black"));
+                        DessinerRectangle(x_start + oldY * cell_size, y_start + oldX * cell_size, cell_size, cell_size);
+                    }
+
+                    // Affiche le pion bleu dans la nouvelle position
+                    AfficherSprite(spritePionBleu, x_start + colonne * cell_size + (cell_size - sprite_size) / 2,
+                                   y_start + ligne * cell_size + (cell_size - sprite_size) / 2);
+                } else {
+                    oldX = joueur2X;
+                    oldY = joueur2Y;
+                    joueur2X = ligne;  // Met à jour la nouvelle position de Joueur 2
+                    joueur2Y = colonne;
+                    grille[ligne][colonne] = 'p';  // Place le pion à la nouvelle position
+
+                    // Efface l'ancienne position si nécessaire
+                    if (grille[oldX][oldY] != 'X' && (oldX != joueur2X || oldY != joueur2Y)) {
+                        grille[oldX][oldY] = ' ';  // Vide l'ancienne case
+                        ChoisirCouleurDessin(CouleurParNom("white"));
+                        RemplirRectangle(x_start + oldY * cell_size, y_start + oldX * cell_size, cell_size, cell_size);
+                        // Redessine la bordure de la case
+                        ChoisirCouleurDessin(CouleurParNom("black"));
+                        DessinerRectangle(x_start + oldY * cell_size, y_start + oldX * cell_size, cell_size, cell_size);
+                    }
+
+                    // Affiche le pion rouge dans la nouvelle position
+                    AfficherSprite(spritePionRouge, x_start + colonne * cell_size + (cell_size - sprite_size) / 2,
+                                   y_start + ligne * cell_size + (cell_size - sprite_size) / 2);
+                }
+
+                // Passe à l'étape suivante pour placer la croix
+                etapePlacement = 2;
+
+            } else {
+                afficherMessageGraphique("Case déjà occupée. Choisissez une autre.");
+            }
+        } else if (etapePlacement == 2) {  // Placement de la croix
+            if (grille[ligne][colonne] == ' ') {  // Vérifie que la case est libre pour la condamnation
+                grille[ligne][colonne] = 'X';  // Condamne la case
+                int x = x_start + colonne * cell_size + (cell_size - sprite_size) / 2;
+                int y = y_start + ligne * cell_size + (cell_size - sprite_size) / 2;
+
                 if (joueur == 1) {
                     AfficherSprite(spriteCroixBleue, x, y);
                 } else {
                     AfficherSprite(spriteCroixRouge, x, y);
                 }
-            } else if (etapePlacement == 2) {  // Placement du pion
-                grille[ligne][colonne] = (joueur == 1) ? 'P' : 'p';  // Marque la case avec le pion
-                if (joueur == 1) {
-                    AfficherSprite(spritePionBleu, x, y);
-                } else {
-                    AfficherSprite(spritePionRouge, x, y);
-                }
+
+                // Retourne à l'étape de déplacement du pion pour le prochain joueur
+                etapePlacement = 1;
+                tourJoueur = (tourJoueur == 1) ? 2 : 1;  // Change de joueur
+            } else {
+                afficherMessageGraphique("Case déjà occupée. Choisissez une autre.");
             }
-        } else {
-            afficherMessageGraphique("Case déjà occupée !");
         }
     }
 }
+
+
+
+
 
 
 
