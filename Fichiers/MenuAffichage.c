@@ -77,7 +77,7 @@ void TailleJeux() {
     afficherFondMenu(); 
 
     // Texte pour le titre
-    ChoisirCouleurDessin(CouleurParNom("lightgray")); 
+    ChoisirCouleurDessin(CouleurParNom("white")); 
     EcrireTexte(120, 80, "Choisissez la taille de la grille :", 2);
 
     for (i = 0; i < MAX_OPTIONS; i++) {
@@ -89,7 +89,7 @@ void TailleJeux() {
         caseY = optionY - 5; 
         caseSize = 20; 
 
-        ChoisirCouleurDessin(CouleurParNom("lightgray"));
+        ChoisirCouleurDessin(CouleurParNom("white"));
         RemplirRectangle(caseX, caseY, caseSize, caseSize);
         if (casesCochees[i]) { 
             ChoisirCouleurDessin(CouleurParNom("red")); 
@@ -97,7 +97,7 @@ void TailleJeux() {
         }
 
         sprintf(optionText, "%dx%d", taille, taille);
-        ChoisirCouleurDessin(CouleurParNom("lightgray")); 
+        ChoisirCouleurDessin(CouleurParNom("white")); 
         EcrireTexte(PositionTexteX, PositionTexteY + (i * 30), optionText, 2);
     }
 
