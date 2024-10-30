@@ -35,6 +35,9 @@ extern int joueur2X, joueur2Y;  // Position actuelle du pion du joueur 2
 
 
 // Déclaration des fonctions
+// Dans Blocus.h
+void revenirAuMenu();  // Déclare la fonction revenirAuMenu pour pouvoir l'utiliser dans Menu.c
+
 void initialiserJeu(int taille);         
 void afficherGrille(int taille);        
 void afficherGrilleJeu(int taille);    
