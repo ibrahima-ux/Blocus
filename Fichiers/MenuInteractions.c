@@ -48,24 +48,31 @@ void gererInteractions(int positionSourisX, int positionSourisY) {
 
 
 void gererMouvement(int joueur, int x, int y, int newX, int newY, int taille) {
-    int blockX,blockY;
-    if (grille[newX][newY] == ' ') {
-        deplacerPion(joueur, &x, &y, newX, newY); 
-        blockX, blockY;
-        
-       
+    int dx = newX - x;
+    int dy = newY - y;
+
+    // Vérifie que le déplacement est dans les cases adjacentes uniquement (sans utiliser abs())
+    if ((dx >= -1 && dx <= 1) && (dy >= -1 && dy <= 1) && grille[newX][newY] == ' ') {
+        deplacerPion(joueur, &x, &y, newX, newY);
+
+        // Choix de la case à bloquer
+        int blockX, blockY;
         do {
             printf("Choisissez une case à bloquer (x, y) : ");
             scanf("%d %d", &blockX, &blockY);
-        } while (grille[blockX][blockY] != ' '); 
+        } while (grille[blockX][blockY] != ' ');
 
         condamnerCase(blockX, blockY);
-        
+
+        // Vérifie si la partie est terminée
         if (estPartieTerminee(newX, newY, taille)) {
-            printf("Le joueur  %d a perdu !\n", joueur);
+            printf("Le joueur %d a perdu !\n", joueur);
         }
+    } else {
+        printf("Déplacement invalide. Vous ne pouvez déplacer le pion que vers une case adjacente libre.\n");
     }
 }
+
 
 
 
