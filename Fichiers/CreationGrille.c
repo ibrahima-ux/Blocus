@@ -1,4 +1,5 @@
 #include "Blocus.h" 
+#include "BlocusAffichage.h"
 #include <graph.h>
 
 char grille[MAX_TAILLE][MAX_TAILLE]; 
@@ -14,50 +15,51 @@ void initialiserJeu(int taille) {
 
 void afficherGrille(int taille) {
 
-    int x_start = (LARGEUR_FENETRE - (taille * 50)) / 2; // centrer 
+    int x_start = (LARGEUR_FENETRE - (taille * 50)) / 2; 
     int y_start = 100; // du bord de la fenetre ala grille Y
     int cell_size = 50; 
 
     int i, j;
     for (i = 0; i < taille; i++) {
         for (j = 0; j < taille; j++) {
-            // Dessiner la cellule
+            
             ChoisirCouleurDessin(CouleurParNom("white")); 
             RemplirRectangle(x_start + j * cell_size, y_start + i * cell_size, cell_size, cell_size); 
 
-            // Dessiner le cadre de la cellule
+            
             ChoisirCouleurDessin(CouleurParNom("black")); 
             DessinerRectangle(x_start + j * cell_size, y_start + i * cell_size, cell_size, cell_size); 
         }
     }
 }
-// Déplace le pion du joueur vers une nouvelle case
+
 void deplacerPion(int joueur, int *x, int *y, int newX, int newY) {
-    grille[*x][*y] = ' ';  // Libérer la case précédente
+    grille[*x][*y] = ' ';  
     *x = newX;
     *y = newY;
-    grille[newX][newY] = (joueur == 1) ? 'A' : 'B';  // 'A' pour joueur 1, 'B' pour joueur 2
+    grille[newX][newY] = (joueur == 1) ? 'A' : 'B';  
 }
 
-// Condamne une case sur la grille
+
 void condamnerCase(int x, int y) {
     if (grille[x][y] == ' ') {
-        grille[x][y] = 'X';  // Marque 'X' pour une case bloquée
+        grille[x][y] = 'X';  
     }
 }
 
-// Vérifie si un joueur peut se déplacer depuis une position donnée
+
 int deplacementPossible(int x, int y, int taille) {
+    int j,newX,newY;
     for (int i = -1; i <= 1; i++) {
-        for (int j = -1; j <= 1; j++) {
-            int newX = x + i;
-            int newY = y + j;
+        for ( j = -1; j <= 1; j++) {
+            newX = x + i;
+             newY = y + j;
             if (newX >= 0 && newX < taille && newY >= 0 && newY < taille && grille[newX][newY] == ' ') {
-                return 1;  // Déplacement possible
+                return 1;  
             }
         }
     }
-    return 0;  // Aucun déplacement possible
+    return 0;  
 }
 
 
@@ -66,18 +68,18 @@ void mettreAJourCase(int x, int y) {
     int x_start = (LARGEUR_FENETRE - (choisirTaille * cell_size)) / 2;
     int y_start = 100;
 
-    // Couleur en fonction du contenu de la case
+    
     if (grille[x][y] == 'X') {
-        ChoisirCouleurDessin(CouleurParNom("grey"));  // Case bloquée
+        ChoisirCouleurDessin(CouleurParNom("grey"));  
     } else if (grille[x][y] == 'A') {
         ChoisirCouleurDessin(CouleurParNom("red"));   // Joueur 1
     } else if (grille[x][y] == 'B') {
         ChoisirCouleurDessin(CouleurParNom("blue"));  // Joueur 2
     } else {
-        ChoisirCouleurDessin(CouleurParNom("white")); // Case libre
+        ChoisirCouleurDessin(CouleurParNom("white")); 
     }
 
-    // Dessiner et remplir la case
+   
     RemplirRectangle(x_start + y * cell_size, y_start + x * cell_size, cell_size, cell_size);
     ChoisirCouleurDessin(CouleurParNom("black"));
     DessinerRectangle(x_start + y * cell_size, y_start + x * cell_size, cell_size, cell_size);
