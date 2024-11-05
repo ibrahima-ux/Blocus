@@ -1,5 +1,6 @@
 #include "Blocus.h"
 #include "errno.h"
+#include "BlocusAffichage.h"
 
 int fondMenu;
 int fondJeu1;
@@ -7,15 +8,13 @@ int fondJeu2;
 
 void chargerSprites() {
 
-    int fondMenu;
-    int fondJeu1;
-    int fondJeu2;
+   
 
     fondMenu = ChargerSprite(IMAGE_MENU);   
     fondJeu1 = ChargerSprite(IMAGE_FOND1);  
     fondJeu2 = ChargerSprite(IMAGE_FOND2);  
 
-    //J'ai ajouté ça pour vérifier d'où venait l'erreur (C'était le format de l'image) (Je sais pas si on les retires ou si on les laisses)
+    
     
     if (fondMenu == -1) {
         fprintf(stderr, "Erreur de chargement de l'image du menu : %s (code d'erreur: %d)\n", IMAGE_MENU, errno);
@@ -35,15 +34,15 @@ void chargerSprites() {
 
 
 void afficherFondMenu() {
-    ChargerImageFond(IMAGE_MENU);  // Remplit l'écran avec l'image du menu
+    ChargerImageFond(IMAGE_MENU);  
 }
 
 void afficherFondJeu1() {
-    ChargerImageFond(IMAGE_FOND1); // Affiche l'image de fond 1 à la taille de la fenêtre
+    ChargerImageFond(IMAGE_FOND1); 
 }
 
 void afficherFondJeu2() {
-    ChargerImageFond(IMAGE_FOND2); // Affiche l'image de fond 2 à la taille de la fenêtre
+    ChargerImageFond(IMAGE_FOND2); 
 }
 
 void libererSprites() {
@@ -70,13 +69,13 @@ void TailleJeux() {
     int largeurTexte; 
     int texteX; 
     int texteY; 
-    //Coordonnées pour le texte de la taille de la grille/plateau
+    
     int PositionTexteX = 120; 
     int PositionTexteY = 145; 
 
     afficherFondMenu(); 
 
-    // Texte pour le titre
+    
     ChoisirCouleurDessin(CouleurParNom("white")); 
     EcrireTexte(120, 80, "Choisissez la taille de la grille :", 2);
 
@@ -93,7 +92,7 @@ void TailleJeux() {
         RemplirRectangle(caseX, caseY, caseSize, caseSize);
         if (casesCochees[i]) { 
             ChoisirCouleurDessin(CouleurParNom("red")); 
-            RemplirRectangle(caseX + 2, caseY + 2, caseSize - 4, caseSize - 4); // Fond rouge si cochée
+            RemplirRectangle(caseX + 2, caseY + 2, caseSize - 4, caseSize - 4); 
         }
 
         sprintf(optionText, "%dx%d", taille, taille);
@@ -101,11 +100,11 @@ void TailleJeux() {
         EcrireTexte(PositionTexteX, PositionTexteY + (i * 30), optionText, 2);
     }
 
-    // Ajout "COMMENCER"
+    
     boutonLargeur = LARGEUR_BOUTON; 
     boutonHauteur = HAUTEUR_BOUTON; 
-    boutonX = (LARGEUR_FENETRE - boutonLargeur) / 2; // Centrer 
-    boutonY = 400; // Position du bouton
+    boutonX = (LARGEUR_FENETRE - boutonLargeur) / 2; 
+    boutonY = 400; 
 
     ChoisirCouleurDessin(CouleurParNom("red")); 
     RemplirRectangle(boutonX, boutonY, boutonLargeur, boutonHauteur); 
