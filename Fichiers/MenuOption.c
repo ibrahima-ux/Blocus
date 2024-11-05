@@ -1,7 +1,9 @@
 #include "Blocus.h"
+#include "BlocusAffichage.h"
 #include <time.h>
 
 
+int spritePionIA = -1;
 
 void afficherOptionsJoueurs() {
     int optionY = HAUTEUR_FENETRE * 0.3;
@@ -37,41 +39,82 @@ void gererChoixJoueurs(int positionSourisX, int positionSourisY) {
 }
 
 
+
+
+ 
+
 void mouvementIA(int *x, int *y, int taille) {
     int newX, newY;
-    do {
-        newX = *x + (rand() % 3 - 1);
-        newY = *y + (rand() % 3 - 1);
-    } while (newX < 0 || newX >= taille || newY < 0 || newY >= taille || grille[newX][newY] != ' ');
+    int validMove = 0;
+    int cell_size = 50;
+    int x_start = (LARGEUR_FENETRE - (taille * cell_size)) / 2;
+    int y_start = (HAUTEUR_FENETRE - (taille * cell_size)) / 2;
 
-    deplacerPion(2, x, y, newX, newY);
-    int blockX, blockY;
+    // Efface l'ancienne position
+    grille[*x][*y] = ' ';
+    ChoisirCouleurDessin(CouleurParNom("white"));
+    RemplirRectangle(x_start + (*y) * cell_size, y_start + (*x) * cell_size, cell_size, cell_size);
+    DessinerRectangle(x_start + (*y) * cell_size, y_start + (*x) * cell_size, cell_size, cell_size);
+
+    // Boucle pour trouver une nouvelle position adjacente
+    while (!validMove) {
+        newX = *x + (rand() % 3 - 1);  // Génère -1, 0 ou +1
+        newY = *y + (rand() % 3 - 1);
+
+        // Limite le mouvement aux cases adjacentes sans utiliser abs()
+        if ((newX - *x >= -1 && newX - *x <= 1) && 
+            (newY - *y >= -1 && newY - *y <= 1) &&
+            newX >= 0 && newX < taille && newY >= 0 && newY < taille && grille[newX][newY] == ' ') {
+            validMove = 1;
+        }
+    }
+
+    *x = newX;
+    *y = newY;
+    grille[newX][newY] = 'B';
+
+    int posX = x_start + newY * cell_size + (cell_size - 25) / 2;
+    int posY = y_start + newX * cell_size + (cell_size - 25) / 2;
+    AfficherSprite(spritePionRouge, posX, posY);
+
+    // Choix d'une case à bloquer
+    int blockX, blockY, attempt = 0;
     do {
         blockX = rand() % taille;
         blockY = rand() % taille;
-    } while (grille[blockX][blockY] != ' ');
-    condamnerCase(blockX, blockY);
-    if (estPartieTerminee(*x, *y, taille)) {
-    afficherScore(1);  // Si le joueur 1 est bloqué
+        attempt++;
+    } while (grille[blockX][blockY] != ' ' && attempt < 50);
+
+    if (grille[blockX][blockY] == ' ') {
+        grille[blockX][blockY] = 'X';
+        placerSpritePion(blockX, blockY, 'X', 2, taille);
+    }
 }
-}
+
+
+
+
+
+
+ 
 int estPartieTerminee(int x, int y, int taille) {
-    int dx[] = {-1, -1, -1, 0, 0, 1, 1, 1};  // Déplacements en x pour les 8 directions
-    int dy[] = {-1, 0, 1, -1, 1, -1, 0, 1};  // Déplacements en y pour les 8 directions
+    int newX,newY,i;
+    int dx[] = {-1, -1, -1, 0, 0, 1, 1, 1};  
+    int dy[] = {-1, 0, 1, -1, 1, -1, 0, 1}; 
 
-    for (int i = 0; i < 8; i++) {
-        int newX = x + dx[i];
-        int newY = y + dy[i];
+    for (i = 0; i < 8; i++) {
+        newX = x + dx[i];
+         newY = y + dy[i];
 
-        // Vérifie que la case adjacente est dans les limites de la grille
+        
         if (newX >= 0 && newX < taille && newY >= 0 && newY < taille) {
-            // Si une case adjacente est libre, le joueur n'est pas bloqué
+            
             if (grille[newX][newY] == ' ') {
-                return 0;  // Déplacement possible, partie non terminée
+                return 0; 
             }
         }
     }
 
-    // Si aucune case adjacente libre, le joueur est bloqué
+    
     return 1;
 }
