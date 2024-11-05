@@ -2,20 +2,21 @@
 #include <graph.h>
 
 #define IMAGE_FIN "ImageFin.png"
-#define BOUTON_X (LARGEUR_FENETRE - 250)   // Position X du bouton plus vers la droite
-#define BOUTON_Y 100                       // Position Y du bouton plus vers le haut
+#define BOUTON_X (LARGEUR_FENETRE - 250)  
+#define BOUTON_Y 100                      
 #define BOUTON_LARGEUR 200
 #define BOUTON_HAUTEUR 50
 
-// Déclaration de la fonction dans Recommencer.c
+
 void revenirAuMenu();
 
 void afficherScore(int gagnant) {
-    // Efface l'écran et charge l'image de fond
+    int sourisX,sourisY;
+ 
     EffacerEcran(CouleurParNom("white"));
     ChargerImageFond(IMAGE_FIN);
 
-    // Affiche le message de victoire au centre de l'écran
+    
     if (gagnant == 1) {
         ChoisirCouleurDessin(CouleurParNom("Blue"));
         EcrireTexte(LARGEUR_FENETRE / 2 - 100, HAUTEUR_FENETRE / 2, "Joueur 1 a gagne !", 2);
@@ -36,20 +37,20 @@ void afficherScore(int gagnant) {
     ChoisirCouleurDessin(CouleurParNom("black"));
     EcrireTexte(20, 30, "Appuyez sur Echap pour quitter.", 1);  
 
-    // Boucle d'attente pour gérer les actions de l'utili.
+    
     while (1) {
         if (ToucheEnAttente() && Touche() == XK_Escape) {
             FermerGraphique();
-            exit(0);  // Quitte complètement le jeu
+            exit(0); 
         } else if (SourisCliquee()) {
             SourisPosition();
-            int sourisX = _X;
-            int sourisY = _Y;
+             sourisX = _X;
+             sourisY = _Y;
 
-            // Vérifie si le bouton "Rejouer" est cliqué
+           
             if (sourisX >= BOUTON_X && sourisX <= BOUTON_X + BOUTON_LARGEUR &&
                 sourisY >= BOUTON_Y && sourisY <= BOUTON_Y + BOUTON_HAUTEUR) {
-                revenirAuMenu();  // Appelle la fonction pour réinitialiser et retourner au menu
+                revenirAuMenu();  
                 break;
             }
         }
