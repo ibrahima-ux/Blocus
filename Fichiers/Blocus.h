@@ -1,5 +1,5 @@
-#ifndef BLocus_H
-#define BLocus_H
+#ifndef BLOCUS_H
+#define BLOCUS_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,58 +16,29 @@
 #define IMAGE_FOND1 "ImageFond2.jpg"
 #define IMAGE_FOND2 "ImageFond2.jpg"  
 
-extern char grille[MAX_TAILLE][MAX_TAILLE]; 
-
-// Variables globales
-extern int etatJeu;  // Déclare etatJeu comme variable globale accessible partout
-
-extern int choisirTaille;           
-extern int casesCochees[MAX_OPTIONS]; 
-extern int modeJeu;         
-extern int spriteCroixBleue;
-extern int spritePionBleu;
-extern int spriteCroixRouge;
-extern int spritePionRouge;        
+// Déclaration de la grille de jeu et variables globales
+extern char grille[MAX_TAILLE][MAX_TAILLE];
+extern int etatJeu;
+extern int choisirTaille;
+extern int casesCochees[MAX_OPTIONS];
+extern int modeJeu;
 extern int etapePlacement;
 extern int tourJoueur;
-extern int joueur1X, joueur1Y;  // Position actuelle du pion du joueur 1
-extern int joueur2X, joueur2Y;  // Position actuelle du pion du joueur 2
+extern int joueur1X, joueur1Y;
+extern int joueur2X, joueur2Y;
 
-
-// Déclaration des fonctions
-// Dans Blocus.h
-void revenirAuMenu();  // Déclare la fonction revenirAuMenu pour pouvoir l'utiliser dans Menu.c
-
-void initialiserJeu(int taille);         
-void afficherGrille(int taille);        
-void afficherGrilleJeu(int taille);    
-void chargerSprites();                  
-void libererSprites();    
-void chargerSpritesPions();
-void libererSpritesPions();             
-void afficherFondMenu();                
-void afficherFondJeu1();                
-void afficherFondJeu2();                
-void TailleJeux();                      
-void gererInteractions(int positionSourisX, int positionSourisY); 
-void afficherOptionsJoueurs();          
-void gererChoixJoueurs(int positionSourisX, int positionSourisY); 
-void afficherGrilleSiValidee(int positionSourisX, int positionSourisY); 
-void mettreAJourCase(int x, int y);
-
-void afficherMessageGraphique(const char *message);
+// Fonctions de jeu principales
+void revenirAuMenu();
+void initialiserJeu(int taille);
+void gererInteractions(int positionSourisX, int positionSourisY);
+void gererChoixJoueurs(int positionSourisX, int positionSourisY);
 void deplacerPion(int joueur, int *x, int *y, int newX, int newY);
 void condamnerCase(int x, int y);
 int deplacementPossible(int x, int y, int taille);
 int estPartieTerminee(int joueurX, int joueurY, int taille);
-void mouvementIA(int *x, int *y, int taille);  // Fonction pour l’IA
-// Déclaration des fonctions pour gérer les interactions
-void placerSpritePion(int ligne, int colonne, char type, int joueur, int taille);
-void gererClicGrille(int positionSourisX, int positionSourisY, int joueur, int taille);
-void afficherScore(int gagnant);
-
-
-// Déclarations des nouvelles fonctions
+void mouvementIA(int *x, int *y, int taille);
+void mettreAJourCase(int x, int y);
 void jouerContreBot(int *joueurX, int *joueurY, int taille);
 void jouerDeuxJoueurs(int *joueurX1, int *joueurY1, int *joueurX2, int *joueurY2, int taille);
-#endif 
+
+#endif  // BLOCUS_H
