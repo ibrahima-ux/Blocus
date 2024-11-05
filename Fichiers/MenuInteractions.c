@@ -101,8 +101,10 @@ void placerSpritePion(int ligne, int colonne, char type, int joueur, int taille)
         }
     }
 }
+
+
 void gererClicGrille(int positionSourisX, int positionSourisY, int joueur, int taille) {
-    int oldX,oldY;
+    int oldX, oldY;
     int cell_size = 50;
     int sprite_size = 25;
     int x_start = (LARGEUR_FENETRE - (taille * cell_size)) / 2;
@@ -111,69 +113,59 @@ void gererClicGrille(int positionSourisX, int positionSourisY, int joueur, int t
     int colonne = (positionSourisX - x_start) / cell_size;
     int ligne = (positionSourisY - y_start) / cell_size;
 
-    
     if (ligne >= 0 && ligne < taille && colonne >= 0 && colonne < taille) {
         
-          if (modeJeu == 1 && joueur == 2) {
-        return; 
-    }
-        
+        if (modeJeu == 1 && joueur == 2) {
+            return; 
+        }
         
         if (etapePlacement == 1) {  
-            if (grille[ligne][colonne] == ' ') {  
-             
-                oldX, oldY;
+            int dx = ligne - (joueur == 1 ? joueur1X : joueur2X);
+            int dy = colonne - (joueur == 1 ? joueur1Y : joueur2Y);
+            
+            // Permet le placement sans restriction lors du premier tour
+            int isFirstMove = (joueur == 1 && joueur1X == 0 && joueur1Y == 0) || 
+                              (joueur == 2 && joueur2X == 0 && joueur2Y == 0);
+
+            
+            if (isFirstMove || ((dx >= -1 && dx <= 1) && (dy >= -1 && dy <= 1) && grille[ligne][colonne] == ' ')) {
+                oldX = (joueur == 1) ? joueur1X : joueur2X;
+                oldY = (joueur == 1) ? joueur1Y : joueur2Y;
+
                 if (joueur == 1) {
-                    oldX = joueur1X;
-                    oldY = joueur1Y;
                     joueur1X = ligne;  
                     joueur1Y = colonne;
-                    grille[ligne][colonne] = 'P';  
+                    grille[ligne][colonne] = 'A';
+                } else {
+                    joueur2X = ligne;  
+                    joueur2Y = colonne;
+                    grille[ligne][colonne] = 'B';
+                }
 
-                   
-                    if (grille[oldX][oldY] != 'X' && (oldX != joueur1X || oldY != joueur1Y)) {
-                        grille[oldX][oldY] = ' ';  
-                        ChoisirCouleurDessin(CouleurParNom("white"));
-                        RemplirRectangle(x_start + oldY * cell_size, y_start + oldX * cell_size, cell_size, cell_size);
-                        
-                        ChoisirCouleurDessin(CouleurParNom("black"));
-                        DessinerRectangle(x_start + oldY * cell_size, y_start + oldX * cell_size, cell_size, cell_size);
-                    }
+                
+                if (grille[oldX][oldY] != 'X') {
+                    grille[oldX][oldY] = ' ';  
+                    ChoisirCouleurDessin(CouleurParNom("white"));
+                    RemplirRectangle(x_start + oldY * cell_size, y_start + oldX * cell_size, cell_size, cell_size);
+                    ChoisirCouleurDessin(CouleurParNom("black"));
+                    DessinerRectangle(x_start + oldY * cell_size, y_start + oldX * cell_size, cell_size, cell_size);
+                }
 
-                    
+               
+                if (joueur == 1) {
                     AfficherSprite(spritePionBleu, x_start + colonne * cell_size + (cell_size - sprite_size) / 2,
                                    y_start + ligne * cell_size + (cell_size - sprite_size) / 2);
                 } else {
-                    oldX = joueur2X;
-                    oldY = joueur2Y;
-                    joueur2X = ligne;  
-                    joueur2Y = colonne;
-                    grille[ligne][colonne] = 'p';  
-
-                    
-                    if (grille[oldX][oldY] != 'X' && (oldX != joueur2X || oldY != joueur2Y)) {
-                        grille[oldX][oldY] = ' ';  
-                        ChoisirCouleurDessin(CouleurParNom("white"));
-                        RemplirRectangle(x_start + oldY * cell_size, y_start + oldX * cell_size, cell_size, cell_size);
-                       
-                        ChoisirCouleurDessin(CouleurParNom("black"));
-                        DessinerRectangle(x_start + oldY * cell_size, y_start + oldX * cell_size, cell_size, cell_size);
-                    }
-
-                    
                     AfficherSprite(spritePionRouge, x_start + colonne * cell_size + (cell_size - sprite_size) / 2,
                                    y_start + ligne * cell_size + (cell_size - sprite_size) / 2);
                 }
-
-            
                 etapePlacement = 2;
-
             } else {
-                afficherMessageGraphique("Case occupee. Choisissez une autre.");
+                afficherMessageGraphique("Déplacement invalide. Case non adjacente.");
             }
         } else if (etapePlacement == 2) {  
             if (grille[ligne][colonne] == ' ') {  
-                grille[ligne][colonne] = 'X'; 
+                grille[ligne][colonne] = 'X';
                 int x = x_start + colonne * cell_size + (cell_size - sprite_size) / 2;
                 int y = y_start + ligne * cell_size + (cell_size - sprite_size) / 2;
 
@@ -182,21 +174,12 @@ void gererClicGrille(int positionSourisX, int positionSourisY, int joueur, int t
                 } else {
                     AfficherSprite(spriteCroixRouge, x, y);
                 }
-
                 
                 etapePlacement = 1;
-                tourJoueur = (tourJoueur == 1) ? 2 : 1; 
+                tourJoueur = (tourJoueur == 1) ? 2 : 1;
             } else {
-                afficherMessageGraphique("Case occupee. Choisissez une autre.");
+                afficherMessageGraphique("Case occupée. Choisissez une autre case pour la croix.");
             }
         }
     }
 }
-
-
-
-
-
-
-
-
