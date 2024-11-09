@@ -1,6 +1,11 @@
-#include "Blocus.h"
-#include "errno.h"
-#include "BlocusAffichage.h"
+#include "MenuAffichage.h"
+#include "Menu.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <graph.h>
+#include "constantes.h"
+#include "MenuInteractions.h"
 
 int fondMenu;
 int fondJeu1;
@@ -11,7 +16,7 @@ void chargerSprites() {
    
 
     fondMenu = ChargerSprite(IMAGE_MENU);   
-    fondJeu1 = ChargerSprite(IMAGE_FOND1);  
+    fondJeu1 = ChargerSprite(IMAGE_FOND2);  
     fondJeu2 = ChargerSprite(IMAGE_FOND2);  
 
     
