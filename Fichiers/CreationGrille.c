@@ -1,6 +1,7 @@
-#include "Blocus.h" 
-#include "BlocusAffichage.h"
-#include <graph.h>
+#include "CreationGrille.h"
+#include <stdlib.h>
+#include "constantes.h"
+#include <graph.h> 
 
 char grille[MAX_TAILLE][MAX_TAILLE]; 
 
@@ -13,25 +14,7 @@ void initialiserJeu(int taille) {
     }
 }
 
-void afficherGrille(int taille) {
 
-    int x_start = (LARGEUR_FENETRE - (taille * 50)) / 2; 
-    int y_start = 100; // du bord de la fenetre ala grille Y
-    int cell_size = 50; 
-
-    int i, j;
-    for (i = 0; i < taille; i++) {
-        for (j = 0; j < taille; j++) {
-            
-            ChoisirCouleurDessin(CouleurParNom("white")); 
-            RemplirRectangle(x_start + j * cell_size, y_start + i * cell_size, cell_size, cell_size); 
-
-            
-            ChoisirCouleurDessin(CouleurParNom("black")); 
-            DessinerRectangle(x_start + j * cell_size, y_start + i * cell_size, cell_size, cell_size); 
-        }
-    }
-}
 
 void deplacerPion(int joueur, int *x, int *y, int newX, int newY) {
     grille[*x][*y] = ' ';  
@@ -49,8 +32,8 @@ void condamnerCase(int x, int y) {
 
 
 int deplacementPossible(int x, int y, int taille) {
-    int j,newX,newY;
-    for (int i = -1; i <= 1; i++) {
+    int i,j,newX,newY;
+    for (i = -1; i <= 1; i++) {
         for ( j = -1; j <= 1; j++) {
             newX = x + i;
              newY = y + j;
@@ -86,3 +69,24 @@ void mettreAJourCase(int x, int y) {
 }
 
 
+int estPartieTerminee(int x, int y, int taille) {
+    int newX, newY, i;
+    int dx[] = {-1, -1, -1, 0, 0, 1, 1, 1};  // Toutes les directions (y compris diagonales)
+    int dy[] = {-1, 0, 1, -1, 1, -1, 0, 1};  // pour une vérification complète
+
+    // Parcourt toutes les cases adjacentes
+    for (i = 0; i < 8; i++) {
+        newX = x + dx[i];
+        newY = y + dy[i];
+
+        // Vérifie que chaque case adjacente est bien dans les limites et libre
+        if (newX >= 0 && newX < taille && newY >= 0 && newY < taille) {
+            if (grille[newX][newY] == ' ') {  // Si au moins une case libre existe
+                return 0;  // La partie n'est pas terminée
+            }
+        }
+    }
+
+    // Si aucune case adjacente n'est libre
+    return 1;
+}
