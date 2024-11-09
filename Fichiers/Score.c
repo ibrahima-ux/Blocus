@@ -1,5 +1,8 @@
-#include "Blocus.h"
+#include "Score.h"
+#include "Recommencer.h"
+#include <stdlib.h>
 #include <graph.h>
+#include "constantes.h"
 
 #define IMAGE_FIN "ImageFin.png"
 #define BOUTON_X (LARGEUR_FENETRE - 250)  
