@@ -1,7 +1,17 @@
-#include "Blocus.h"
-#include "BlocusAffichage.h"
+#include "MenuOption.h"
+#include "CreationGrille.h"
+#include "MenuInteractions.h"
+#include <graph.h>
+#include "constantes.h"
 #include <time.h>
+#include "MenuAffichage.h"
+#include "Sprites.h"
+#include <stdlib.h> 
 
+
+
+// constantes.h ou autre en-tête approprié
+extern int joueur1X, joueur1Y;
 
 int spritePionIA = -1;
 
@@ -41,80 +51,99 @@ void gererChoixJoueurs(int positionSourisX, int positionSourisY) {
 
 
 
- 
-
 void mouvementIA(int *x, int *y, int taille) {
-    int newX, newY;
-    int validMove = 0;
+    int newX, newY,i, k,randomDirection, attempt;
+    int dx[] = {1, 0, 0, -1};  // Priorité de directions : bas, droite, gauche, haut
+    int dy[] = {0, 1, -1, 0};
     int cell_size = 50;
     int x_start = (LARGEUR_FENETRE - (taille * cell_size)) / 2;
     int y_start = (HAUTEUR_FENETRE - (taille * cell_size)) / 2;
+    int border_thickness = 3;  // Épaisseur de bordure cohérente avec celle définie dans afficherGrilleJeu()
+    int bx, by;
+    int foundMove = 0;  // Variable pour vérifier si un mouvement a été trouvé
+  int posX, posY;
+   int blockX = -1, blockY = -1;
+    // Tentative de mouvement dans les directions prioritaires
+    for (i = 0; i < 4; i++) {
+        newX = *x + dx[i];
+        newY = *y + dy[i];
 
-    // Efface l'ancienne position
-    grille[*x][*y] = ' ';
-    ChoisirCouleurDessin(CouleurParNom("white"));
-    RemplirRectangle(x_start + (*y) * cell_size, y_start + (*x) * cell_size, cell_size, cell_size);
-    DessinerRectangle(x_start + (*y) * cell_size, y_start + (*x) * cell_size, cell_size, cell_size);
-
-    // Boucle pour trouver une nouvelle position adjacente
-    while (!validMove) {
-        newX = *x + (rand() % 3 - 1);  // Génère -1, 0 ou +1
-        newY = *y + (rand() % 3 - 1);
-
-        // Limite le mouvement aux cases adjacentes sans utiliser abs()
-        if ((newX - *x >= -1 && newX - *x <= 1) && 
-            (newY - *y >= -1 && newY - *y <= 1) &&
-            newX >= 0 && newX < taille && newY >= 0 && newY < taille && grille[newX][newY] == ' ') {
-            validMove = 1;
+        if (newX >= 0 && newX < taille && newY >= 0 && newY < taille && grille[newX][newY] == ' ') {
+            foundMove = 1;
+            break;
         }
     }
 
-    *x = newX;
-    *y = newY;
-    grille[newX][newY] = 'B';
+    // Si aucun mouvement prioritaire n'est trouvé, choisir une direction aléatoire
+    if (!foundMove) {
+        srand(time(NULL));  // Initialiser le générateur de nombres aléatoires
 
-    int posX = x_start + newY * cell_size + (cell_size - 25) / 2;
-    int posY = y_start + newX * cell_size + (cell_size - 25) / 2;
-    AfficherSprite(spritePionRouge, posX, posY);
+        for (attempt = 0; attempt < 10; attempt++) {  // Limite à 10 tentatives pour éviter une boucle infinie
+             randomDirection = rand() % 4;  // Choisir une direction aléatoire
+            newX = *x + dx[randomDirection];
+            newY = *y + dy[randomDirection];
 
-    // Choix d'une case à bloquer
-    int blockX, blockY, attempt = 0;
-    do {
-        blockX = rand() % taille;
-        blockY = rand() % taille;
-        attempt++;
-    } while (grille[blockX][blockY] != ' ' && attempt < 50);
-
-    if (grille[blockX][blockY] == ' ') {
-        grille[blockX][blockY] = 'X';
-        placerSpritePion(blockX, blockY, 'X', 2, taille);
-    }
-}
-
-
-
-
-
-
- 
-int estPartieTerminee(int x, int y, int taille) {
-    int newX,newY,i;
-    int dx[] = {-1, -1, -1, 0, 0, 1, 1, 1};  
-    int dy[] = {-1, 0, 1, -1, 1, -1, 0, 1}; 
-
-    for (i = 0; i < 8; i++) {
-        newX = x + dx[i];
-         newY = y + dy[i];
-
-        
-        if (newX >= 0 && newX < taille && newY >= 0 && newY < taille) {
-            
-            if (grille[newX][newY] == ' ') {
-                return 0; 
+            if (newX >= 0 && newX < taille && newY >= 0 && newY < taille && grille[newX][newY] == ' ') {
+                foundMove = 1;
+                break;
             }
         }
     }
 
-    
-    return 1;
+    // Déplacement si un mouvement valide est trouvé
+    if (foundMove) {
+        // Efface l'ancienne position
+        grille[*x][*y] = ' ';
+        ChoisirCouleurDessin(CouleurParNom("white"));
+        RemplirRectangle(x_start + (*y) * cell_size, y_start + (*x) * cell_size, cell_size, cell_size);
+        
+        // Redessine la bordure de l'ancienne case
+        ChoisirCouleurDessin(CouleurParNom("black"));
+        for (k = 0; k < border_thickness; k++) {
+            DessinerRectangle(x_start + (*y) * cell_size + k, y_start + (*x) * cell_size + k, cell_size - 2 * k, cell_size - 2 * k);
+        }
+
+        // Met à jour la position de l'IA
+        *x = newX;
+        *y = newY;
+        grille[newX][newY] = 'B';
+
+         posX = x_start + newY * cell_size + (cell_size - 25) / 2;
+        posY = y_start + newX * cell_size + (cell_size - 25) / 2;
+        AfficherSprite(spritePionRouge, posX, posY);
+
+        // Redessine la bordure de la nouvelle case
+        ChoisirCouleurDessin(CouleurParNom("black"));
+        for (int k = 0; k < border_thickness; k++) {
+            DessinerRectangle(x_start + newY * cell_size + k, y_start + newX * cell_size + k, cell_size - 2 * k, cell_size - 2 * k);
+        }
+    }
+
+    // Choix d'une case adjacente au joueur à bloquer
+    blockX = -1, blockY = -1;
+    for (i = 0; i < 4; i++) {
+         bx = joueur1X + dx[i];
+        by = joueur1Y + dy[i];
+
+        if (bx >= 0 && bx < taille && by >= 0 && by < taille && grille[bx][by] == ' ') {
+            blockX = bx;
+            blockY = by;
+            break;
+        }
+    }
+
+    if (blockX != -1 && blockY != -1) {
+        grille[blockX][blockY] = 'X';
+        placerSpritePion(blockX, blockY, 'X', 2, taille);
+
+        // Redessine la bordure de la case bloquée
+        ChoisirCouleurDessin(CouleurParNom("black"));
+        for ( k = 0; k < border_thickness; k++) {
+            DessinerRectangle(x_start + blockY * cell_size + k, y_start + blockX * cell_size + k, cell_size - 2 * k, cell_size - 2 * k);
+        }
+    }
 }
+
+
+ 
+
