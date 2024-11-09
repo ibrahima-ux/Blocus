@@ -22,10 +22,10 @@ void afficherScore(int gagnant) {
     
     if (gagnant == 1) {
         ChoisirCouleurDessin(CouleurParNom("Blue"));
-        EcrireTexte(LARGEUR_FENETRE / 2 - 100, HAUTEUR_FENETRE / 2, "Joueur 1 a gagne !", 2);
+        EcrireTexte(LARGEUR_FENETRE / 2.27 - 100, HAUTEUR_FENETRE / 3, "Joueur 1 a gagne !", 2);
     } else if (gagnant == 2) {
         ChoisirCouleurDessin(CouleurParNom("Red"));
-        EcrireTexte(LARGEUR_FENETRE / 2 - 100, HAUTEUR_FENETRE / 2, "Joueur 2 a gagne !", 2);
+        EcrireTexte(LARGEUR_FENETRE / 2.27- 100, HAUTEUR_FENETRE / 3, "Joueur 2 a gagne !", 2);
     }
 
    
