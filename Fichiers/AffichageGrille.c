@@ -9,15 +9,15 @@ void afficherGrilleJeu(int taille) {
     int totalWidth = taille * cell_size;
     int totalHeight = taille * cell_size;
 
-    int x_start = (LARGEUR_FENETRE - totalWidth) / 2; // Calcul pour centrer la grille
+    int x_start = (LARGEUR_FENETRE - totalWidth) / 2; /* Calcul pour centrer la grille*/
     int y_start = (HAUTEUR_FENETRE - totalHeight) / 2;
-    int border_thickness = 3; // Épaisseur des bordures
+    int border_thickness = 3; /* Épaisseur des bordures */
 
     int i, j, k;
     for (i = 0; i < taille; i++) {
         for (j = 0; j < taille; j++) {
             
-            // Couleur selon le contenu de la cellule
+            /* Couleur selon le contenu de la cellule */
             if (grille[i][j] == 'X') {
                 ChoisirCouleurDessin(CouleurParNom("grey")); 
             } 
