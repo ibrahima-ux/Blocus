@@ -25,7 +25,7 @@ void gererInteractions(int positionSourisX, int positionSourisY) {
             positionSourisY >= caseY && positionSourisY <= caseY + 20) {
             
             
-            for (int j = 0; j < MAX_OPTIONS; j++) {
+            for (j = 0; j < MAX_OPTIONS; j++) {
                 casesCochees[j] = 0;
             }
             casesCochees[i] = 1;  
