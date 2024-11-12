@@ -204,6 +204,7 @@ int gererClicGrille(int positionSourisX, int positionSourisY, int joueur, int ta
         afficherMessageGraphique("Position invalide. Hors de la grille.");
         return 0;  /* Mouvement invalide */
     }
+return 0;
 }
 
 
