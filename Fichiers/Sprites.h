@@ -13,4 +13,4 @@ void chargerSpritesPions();
 
 void libererSpritesPions();
 
-#endif  // SPRITES_H
+#endif  
