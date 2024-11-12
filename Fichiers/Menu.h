@@ -17,4 +17,4 @@ void afficherMessageGraphique(const char *message);
 
 void afficherGrilleSiValidee(int positionSourisX, int positionSourisY);
 
-#endif  // MENU_H
+#endif  
