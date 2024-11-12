@@ -120,6 +120,7 @@ int gererClicGrille(int positionSourisX, int positionSourisY, int joueur, int ta
     int x_start = (LARGEUR_FENETRE - (taille * cell_size)) / 2;
     int y_start = (HAUTEUR_FENETRE - (taille * cell_size)) / 2;
     int border_thickness = 3; 
+    int x, y;
 
     int colonne = (positionSourisX - x_start) / cell_size;
     int ligne = (positionSourisY - y_start) / cell_size;
@@ -182,8 +183,8 @@ int gererClicGrille(int positionSourisX, int positionSourisY, int joueur, int ta
         } else if (etapePlacement == 2) {  
             if (grille[ligne][colonne] == ' ') {  
                 grille[ligne][colonne] = 'X';
-                int x = x_start + colonne * cell_size + (cell_size - sprite_size) / 2;
-                int y = y_start + ligne * cell_size + (cell_size - sprite_size) / 2;
+                 x = x_start + colonne * cell_size + (cell_size - sprite_size) / 2;
+                 y = y_start + ligne * cell_size + (cell_size - sprite_size) / 2;
 
                 if (joueur == 1) {
                     AfficherSprite(spriteCroixBleue, x, y);
