@@ -5,4 +5,4 @@
 
 void afficherScore(int gagnant);
 
-#endif  // SCORE_H
+#endif  
