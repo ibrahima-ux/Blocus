@@ -43,7 +43,7 @@ void afficherFondMenu() {
 }
 
 void afficherFondJeu1() {
-    ChargerImageFond(IMAGE_FOND1); 
+    ChargerImageFond(IMAGE_FOND2); 
 }
 
 void afficherFondJeu2() {
