@@ -120,7 +120,7 @@ int gererClicGrille(int positionSourisX, int positionSourisY, int joueur, int ta
     int x_start = (LARGEUR_FENETRE - (taille * cell_size)) / 2;
     int y_start = (HAUTEUR_FENETRE - (taille * cell_size)) / 2;
     int border_thickness = 3; 
-    int x, y;
+    int x, y, k;
 
     int colonne = (positionSourisX - x_start) / cell_size;
     int ligne = (positionSourisY - y_start) / cell_size;
