@@ -149,7 +149,7 @@ int gererClicGrille(int positionSourisX, int positionSourisY, int joueur, int ta
                     
                     /* Redessine une bordure uniforme sur la case d'origine */
                     ChoisirCouleurDessin(CouleurParNom("black"));
-                    for (int k = 0; k < border_thickness; k++) {
+                    for (k = 0; k < border_thickness; k++) {
                         DessinerRectangle(x_start + oldY * cell_size + k, y_start + oldX * cell_size + k,
                                           cell_size - 2 * k, cell_size - 2 * k);
                     }
