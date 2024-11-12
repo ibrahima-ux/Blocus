@@ -5,13 +5,13 @@
 
 /* Affiche la grille de jeu avec couleurs pour chaque joueur */
 void afficherGrilleJeu(int taille) {
-    int cell_size = 50; // Taille d'une cellule
+    int cell_size = 50; /* Taille d'une cellule */
     int totalWidth = taille * cell_size;
     int totalHeight = taille * cell_size;
 
     int x_start = (LARGEUR_FENETRE - totalWidth) / 2; /* Calcul pour centrer la grille*/
     int y_start = (HAUTEUR_FENETRE - totalHeight) / 2;
-    int border_thickness = 3; /* Épaisseur des bordures */
+    int border_thickness = 3; 
 
     int i, j, k;
     for (i = 0; i < taille; i++) {
@@ -22,19 +22,19 @@ void afficherGrilleJeu(int taille) {
                 ChoisirCouleurDessin(CouleurParNom("grey")); 
             } 
             else if (grille[i][j] == 'A') {
-                ChoisirCouleurDessin(CouleurParNom("red"));   // Joueur 1
+                ChoisirCouleurDessin(CouleurParNom("red"));   
             } 
             else if (grille[i][j] == 'B') {
-                ChoisirCouleurDessin(CouleurParNom("blue"));  // Joueur 2
+                ChoisirCouleurDessin(CouleurParNom("blue"));  
             } 
             else {
                 ChoisirCouleurDessin(CouleurParNom("white")); 
             }
             
-            // Remplit la cellule de la grille
+            /* Remplit la cellule de la grille */
             RemplirRectangle(x_start + j * cell_size, y_start + i * cell_size, cell_size, cell_size);
 
-            // Dessine la bordure de la cellule
+            /* Dessine la bordure de la cellule */
             ChoisirCouleurDessin(CouleurParNom("black"));
             for (k = 0; k < border_thickness; k++) {
                 DessinerRectangle(
@@ -51,7 +51,7 @@ void afficherGrilleJeu(int taille) {
 /* Affiche une grille vide centrée avec des bordures noires */
 void afficherGrille(int taille) {
     int x_start = (LARGEUR_FENETRE - (taille * 50)) / 2; 
-    int y_start = 100; // Position de départ de la grille en y
+    int y_start = 100; /* Position de départ de la grille en y */
     int cell_size = 50; 
 
     int i, j;
