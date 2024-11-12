@@ -18,13 +18,13 @@ int main(void) {
        int boutonX, boutonY;
       
 
-    // Initialisation graphique
+   
     if (InitialiserGraphique() == -1) {
         fprintf(stderr, "Erreur lors de l'initialisation graphique.\n");
         return EXIT_FAILURE;
     }
 
-    // Création de la fenêtre
+
     CreerFenetre(20, 20, LARGEUR_FENETRE, HAUTEUR_FENETRE);
     chargerSprites();
     chargerSpritesPions();
@@ -33,14 +33,13 @@ int main(void) {
 
    
 
-    // Boucle principale du jeu
     while (1) {
         if (SourisCliquee()) {
             SourisPosition();
             positionSourisX = _X;
             positionSourisY = _Y;
 
-            // État de configuration du jeu (choix de taille et mode de jeu)
+            /* État de configuration du jeu (choix de taille et mode de jeu) */
             if (etatJeu == 1) {  
                 gererInteractions(positionSourisX, positionSourisY);
                 afficherGrilleSiValidee(positionSourisX, positionSourisY);
@@ -48,7 +47,7 @@ int main(void) {
                  boutonX = (LARGEUR_FENETRE - LARGEUR_BOUTON) / 2;
                  boutonY = 400;
 
-                // Vérifie si les options de taille et de mode de jeu sont valides
+                /* Vérifie si les options de taille et de mode de jeu sont valides */
                 if (positionSourisX >= boutonX && positionSourisX <= boutonX + LARGEUR_BOUTON &&
                     positionSourisY >= boutonY && positionSourisY <= boutonY + HAUTEUR_BOUTON) {
                     
@@ -74,9 +73,9 @@ int main(void) {
                     }
                 }
             } 
-            // Phase de jeu principale
+            /* Phase de jeu principale */
             else if (etatJeu == 2) {  
-                // Mode 1 joueur (Joueur contre IA) 
+                /* Mode 1 joueur (Joueur contre IA) */
                 if (modeJeu == 1) {
                     if (tourJoueur == 1) {  
                         if (etapePlacement == 1) { 
@@ -98,7 +97,7 @@ int main(void) {
                         }
                     }
                 }
-                // Mode 2 joueurs (Humain contre humain) 
+                /* Mode 2 joueurs (Humain contre humain) */ 
                 else if (modeJeu == 2) {
                     if (tourJoueur == 1) {  
                         if (etapePlacement == 1) {  
@@ -119,7 +118,7 @@ int main(void) {
                             afficherScore(2);  
                         }
                     } 
-                    else if (tourJoueur == 2) {  // Tour du Joueur 2
+                    else if (tourJoueur == 2) {  /* Tour du Joueur 2 */
                         if (etapePlacement == 1) {  
                             afficherMessageGraphique("Joueur 2 : Placez votre pion.");
                             if (gererClicGrille(positionSourisX, positionSourisY, 2, choisirTaille)) {
@@ -141,7 +140,7 @@ int main(void) {
                 }
             }
 
-            // Tour du Joueur 2 (IA) sans clic pour le mode 1 joueur
+            /* Tour du Joueur 2 (IA) sans clic pour le mode 1 joueur */
             if (etatJeu == 2 && modeJeu == 1 && tourJoueur == 2) {  
                 mouvementIA(&joueur2X, &joueur2Y, choisirTaille);  
 
@@ -153,7 +152,7 @@ int main(void) {
                 }
             }
 
-            // Gestion du mode fin de jeu avec retour au menu
+            /* Gestion du mode fin de jeu avec retour au menu */
             if (etatJeu == 3) {
                 revenirAuMenu();  
                 etatJeu = 1;      
