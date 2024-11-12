@@ -55,9 +55,9 @@ void mettreAJourCase(int x, int y) {
     if (grille[x][y] == 'X') {
         ChoisirCouleurDessin(CouleurParNom("grey"));  
     } else if (grille[x][y] == 'A') {
-        ChoisirCouleurDessin(CouleurParNom("red"));   // Joueur 1
+        ChoisirCouleurDessin(CouleurParNom("red"));   
     } else if (grille[x][y] == 'B') {
-        ChoisirCouleurDessin(CouleurParNom("blue"));  // Joueur 2
+        ChoisirCouleurDessin(CouleurParNom("blue")); 
     } else {
         ChoisirCouleurDessin(CouleurParNom("white")); 
     }
@@ -71,22 +71,22 @@ void mettreAJourCase(int x, int y) {
 
 int estPartieTerminee(int x, int y, int taille) {
     int newX, newY, i;
-    int dx[] = {-1, -1, -1, 0, 0, 1, 1, 1};  // Toutes les directions (y compris diagonales)
-    int dy[] = {-1, 0, 1, -1, 1, -1, 0, 1};  // pour une vérification complète
+    int dx[] = {-1, -1, -1, 0, 0, 1, 1, 1};  /* Toutes les directions (y compris diagonales) */
+    int dy[] = {-1, 0, 1, -1, 1, -1, 0, 1};  /* pour une vérification complète */
 
-    // Parcourt toutes les cases adjacentes
+    /* Parcourt toutes les cases adjacentes */
     for (i = 0; i < 8; i++) {
         newX = x + dx[i];
         newY = y + dy[i];
 
-        // Vérifie que chaque case adjacente est bien dans les limites et libre
+        /* Vérifie que chaque case adjacente est bien dans les limites et libre */
         if (newX >= 0 && newX < taille && newY >= 0 && newY < taille) {
-            if (grille[newX][newY] == ' ') {  // Si au moins une case libre existe
-                return 0;  // La partie n'est pas terminée
+            if (grille[newX][newY] == ' ') {  /* Si au moins une case libre existe */
+                return 0;  /* La partie n'est pas terminée */
             }
         }
     }
 
-    // Si aucune case adjacente n'est libre
+    /* Si aucune case adjacente n'est libre */
     return 1;
 }
