@@ -64,11 +64,10 @@ void gererMouvement(int joueur, int x, int y, int newX, int newY, int taille) {
     int dy = newY - y;
      int blockX, blockY;
 
-    // Vérifie que le déplacement est dans les cases adjacentes uniquement (sans utiliser abs())
+    /* Vérifie que le déplacement est dans les cases adjacentes uniquement (sans utiliser abs()) */
     if ((dx >= -1 && dx <= 1) && (dy >= -1 && dy <= 1) && grille[newX][newY] == ' ') {
         deplacerPion(joueur, &x, &y, newX, newY);
 
-        // Choix de la case à bloquer
         blockX, blockY;
         do {
             printf("Choisissez une case à bloquer (x, y) : ");
@@ -77,7 +76,6 @@ void gererMouvement(int joueur, int x, int y, int newX, int newY, int taille) {
 
         condamnerCase(blockX, blockY);
 
-        // Vérifie si la partie est terminée
         if (estPartieTerminee(newX, newY, taille)) {
             printf("Le joueur %d a perdu !\n", joueur);
         }
@@ -121,7 +119,7 @@ int gererClicGrille(int positionSourisX, int positionSourisY, int joueur, int ta
     int sprite_size = 25;
     int x_start = (LARGEUR_FENETRE - (taille * cell_size)) / 2;
     int y_start = (HAUTEUR_FENETRE - (taille * cell_size)) / 2;
-    int border_thickness = 3; // Épaisseur des bordures
+    int border_thickness = 3; 
 
     int colonne = (positionSourisX - x_start) / cell_size;
     int ligne = (positionSourisY - y_start) / cell_size;
@@ -129,10 +127,10 @@ int gererClicGrille(int positionSourisX, int positionSourisY, int joueur, int ta
     if (ligne >= 0 && ligne < taille && colonne >= 0 && colonne < taille) {
 
         if (modeJeu == 1 && joueur == 2) {
-            return 0;  // Pas de mouvement manuel pour l'IA
+            return 0;  
         }
 
-        if (etapePlacement == 1) {  // Déplacement du pion
+        if (etapePlacement == 1) {  
             int dx = ligne - (joueur == 1 ? joueur1X : joueur2X);
             int dy = colonne - (joueur == 1 ? joueur1Y : joueur2Y);
             
@@ -143,13 +141,13 @@ int gererClicGrille(int positionSourisX, int positionSourisY, int joueur, int ta
                 oldX = (joueur == 1) ? joueur1X : joueur2X;
                 oldY = (joueur == 1) ? joueur1Y : joueur2Y;
 
-                // Efface la position précédente si ce n'est pas le premier coup
+                /* Efface la position précédente si ce n'est pas le premier coup */
                 if (!isFirstMove && grille[oldX][oldY] != 'X') {
                     grille[oldX][oldY] = ' ';  
                     ChoisirCouleurDessin(CouleurParNom("white"));
                     RemplirRectangle(x_start + oldY * cell_size, y_start + oldX * cell_size, cell_size, cell_size);
                     
-                    // Redessine une bordure uniforme sur la case d'origine
+                    /* Redessine une bordure uniforme sur la case d'origine */
                     ChoisirCouleurDessin(CouleurParNom("black"));
                     for (int k = 0; k < border_thickness; k++) {
                         DessinerRectangle(x_start + oldY * cell_size + k, y_start + oldX * cell_size + k,
@@ -176,12 +174,12 @@ int gererClicGrille(int positionSourisX, int positionSourisY, int joueur, int ta
                 }
 
                 etapePlacement = 2;
-                return 1;  // Mouvement valide
+                return 1;  
             } else {
                 afficherMessageGraphique("Déplacement invalide. Case non adjacente.");
-                return 0;  // Mouvement invalide
+                return 0;  
             }
-        } else if (etapePlacement == 2) {  // Placement de la croix
+        } else if (etapePlacement == 2) {  
             if (grille[ligne][colonne] == ' ') {  
                 grille[ligne][colonne] = 'X';
                 int x = x_start + colonne * cell_size + (cell_size - sprite_size) / 2;
@@ -193,17 +191,17 @@ int gererClicGrille(int positionSourisX, int positionSourisY, int joueur, int ta
                     AfficherSprite(spriteCroixRouge, x, y);
                 }
                 
-                etapePlacement = 1;  // Revient à l'étape de placement du pion
-                tourJoueur = (tourJoueur == 1) ? 2 : 1;  // Change de joueur
-                return 1;  // Placement de croix valide
+                etapePlacement = 1;  /* Revient à l'étape de placement du pion */
+                tourJoueur = (tourJoueur == 1) ? 2 : 1;  /* Change de joueur */
+                return 1;  /* Placement de croix valide */
             } else {
                 afficherMessageGraphique("Case occupée. Choisissez une autre case pour la croix.");
-                return 0;  // Mouvement invalide
+                return 0;  /* Mouvement invalide */
             }
         }
     } else {
         afficherMessageGraphique("Position invalide. Hors de la grille.");
-        return 0;  // Mouvement invalide
+        return 0;  /* Mouvement invalide */
     }
 }
 
