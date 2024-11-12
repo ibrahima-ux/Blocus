@@ -15,6 +15,6 @@ int deplacementPossible(int x, int y, int taille);
 
 void mettreAJourCase(int x, int y);
 
-int estPartieTerminee(int x, int y, int taille);  // Ajouté ici après le déplacement
+int estPartieTerminee(int x, int y, int taille);  /* Ajouté ici après le déplacement */
 
 #endif  
