@@ -11,4 +11,4 @@ void mouvementIA(int *x, int *y, int taille);
 
 int estPartieTerminee(int x, int y, int taille);
 
-#endif  // MENU_OPTION_H
+#endif  
