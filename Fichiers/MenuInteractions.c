@@ -68,7 +68,7 @@ void gererMouvement(int joueur, int x, int y, int newX, int newY, int taille) {
     if ((dx >= -1 && dx <= 1) && (dy >= -1 && dy <= 1) && grille[newX][newY] == ' ') {
         deplacerPion(joueur, &x, &y, newX, newY);
 
-        blockX, blockY;
+        
         do {
             printf("Choisissez une case à bloquer (x, y) : ");
             scanf("%d %d", &blockX, &blockY);
