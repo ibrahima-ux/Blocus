@@ -14,7 +14,7 @@
 int main(void) {
     int positionSourisX, positionSourisY;
     unsigned long suivant = Microsecondes() + CYCLE;
-     int grilleAffichee = 0;
+     
        int boutonX, boutonY;
       
 
@@ -64,7 +64,7 @@ int main(void) {
                         afficherGrilleJeu(choisirTaille);
                         afficherMessageGraphique("Joueur 1 : Placez votre pion.");
 
-                        grilleAffichee = 1;
+                       
                         etatJeu = 2; 
                         tourJoueur = 1;
                         etapePlacement = 1;
