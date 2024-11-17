@@ -51,92 +51,109 @@ void gererChoixJoueurs(int positionSourisX, int positionSourisY) {
 
 
 void mouvementIA(int *x, int *y, int taille) {
-    int newX, newY,i, k,randomDirection, attempt;
-    int dx[] = {1, 0, 0, -1};  /* Priorité de directions : bas, droite, gauche, haut */
-    int dy[] = {0, 1, -1, 0};
+    int dx[] = {1, -1, 0, 0};  /* Directions : bas, haut, droite, gauche */
+    int dy[] = {0, 0, 1, -1};
+    int newX, newY, i, k,j;
     int cell_size = 50;
     int x_start = (LARGEUR_FENETRE - (taille * cell_size)) / 2;
     int y_start = (HAUTEUR_FENETRE - (taille * cell_size)) / 2;
-    int border_thickness = 3;  /* Épaisseur de bordure cohérente avec celle définie dans afficherGrilleJeu() */
-    int bx, by;
-    int foundMove = 0;  
-  int posX, posY;
-   int blockX = -1, blockY = -1;
+    int border_thickness = 3;
+    int posX, posY, bx, by;
+    int bestMoveX = -1, bestMoveY = -1, bestMoveScore = -1000;
+    int blockX = -1, blockY = -1, blockScore = -1000;
 
     for (i = 0; i < 4; i++) {
         newX = *x + dx[i];
         newY = *y + dy[i];
 
         if (newX >= 0 && newX < taille && newY >= 0 && newY < taille && grille[newX][newY] == ' ') {
-            foundMove = 1;
-            break;
-        }
-    }
+            int score = 0;
 
-    if (!foundMove) {
-        srand(time(NULL));  /* Initialiser le générateur de nombres aléatoires */
+            /* Calculer le nombre de cases libres après ce mouvement */
+            for ( j = 0; j < 4; j++) {
+                int adjX = newX + dx[j];
+                int adjY = newY + dy[j];
+                if (adjX >= 0 && adjX < taille && adjY >= 0 && adjY < taille && grille[adjX][adjY] == ' ') {
+                    score++;
+                }
+            }
 
-        for (attempt = 0; attempt < 10; attempt++) {  /* Limite à 10 tentatives pour éviter une boucle infinie */
-             randomDirection = rand() % 4;  /* Choisir une direction aléatoire */
-            newX = *x + dx[randomDirection];
-            newY = *y + dy[randomDirection];
-
-            if (newX >= 0 && newX < taille && newY >= 0 && newY < taille && grille[newX][newY] == ' ') {
-                foundMove = 1;
-                break;
+            /* Choisir le mouvement avec le meilleur score */
+            if (score > bestMoveScore) {
+                bestMoveScore = score;
+                bestMoveX = newX;
+                bestMoveY = newY;
             }
         }
     }
 
-    /* Déplacement si un mouvement valide est trouvé */
-    if (foundMove) {
-        /* Efface l'ancienne position */
+    /* Déplacer l'IA */
+    if (bestMoveX != -1 && bestMoveY != -1) {
         grille[*x][*y] = ' ';
         ChoisirCouleurDessin(CouleurParNom("white"));
         RemplirRectangle(x_start + (*y) * cell_size, y_start + (*x) * cell_size, cell_size, cell_size);
-        
-        /* Redessine la bordure de l'ancienne case */
+
+        /* Redessiner bordure de l'ancienne case */
         ChoisirCouleurDessin(CouleurParNom("black"));
         for (k = 0; k < border_thickness; k++) {
             DessinerRectangle(x_start + (*y) * cell_size + k, y_start + (*x) * cell_size + k, cell_size - 2 * k, cell_size - 2 * k);
         }
 
-        /* Met à jour la position de l'IA */
-        *x = newX;
-        *y = newY;
-        grille[newX][newY] = 'B';
+        *x = bestMoveX;
+        *y = bestMoveY;
+        grille[bestMoveX][bestMoveY] = 'B';
 
-         posX = x_start + newY * cell_size + (cell_size - 25) / 2;
-        posY = y_start + newX * cell_size + (cell_size - 25) / 2;
+        /* Dessiner le pion rouge */
+        posX = x_start + bestMoveY * cell_size + (cell_size - 25) / 2;
+        posY = y_start + bestMoveX * cell_size + (cell_size - 25) / 2;
         AfficherSprite(spritePionRouge, posX, posY);
 
-        /* Redessine la bordure de la nouvelle case */
+        /* Redessiner bordure de la nouvelle case */
         ChoisirCouleurDessin(CouleurParNom("black"));
         for (k = 0; k < border_thickness; k++) {
-            DessinerRectangle(x_start + newY * cell_size + k, y_start + newX * cell_size + k, cell_size - 2 * k, cell_size - 2 * k);
+            DessinerRectangle(x_start + bestMoveY * cell_size + k, y_start + bestMoveX * cell_size + k, cell_size - 2 * k, cell_size - 2 * k);
         }
     }
 
-    /* Choix d'une case adjacente au joueur à bloquer */
-    blockX = -1, blockY = -1;
+    
+    blockX = -1; 
+    blockY = -1; 
+    blockScore = -1000;
+
+    /* Explorer toutes les cases autour de l'adversaire */
     for (i = 0; i < 4; i++) {
-         bx = joueur1X + dx[i];
+        bx = joueur1X + dx[i];
         by = joueur1Y + dy[i];
 
         if (bx >= 0 && bx < taille && by >= 0 && by < taille && grille[bx][by] == ' ') {
-            blockX = bx;
-            blockY = by;
-            break;
+            int score = 0;
+
+            /* Calculer combien de cases l'adversaire perd si cette case est bloquée */
+            for (j = 0; j < 4; j++) {
+                int adjX = joueur1X + dx[j];
+                int adjY = joueur1Y + dy[j];
+                if (adjX >= 0 && adjX < taille && adjY >= 0 && adjY < taille && grille[adjX][adjY] == ' ') {
+                    score++;
+                }
+            }
+
+            /* Prioriser le blocage des cases qui limitent le plus l'adversaire */
+            if (score > blockScore) {
+                blockScore = score;
+                blockX = bx;
+                blockY = by;
+            }
         }
     }
 
+    /* Bloquer la meilleure case trouvée */
     if (blockX != -1 && blockY != -1) {
         grille[blockX][blockY] = 'X';
         placerSpritePion(blockX, blockY, 'X', 2, taille);
 
-        /* Redessine la bordure de la case bloquée */
+        /* Redessiner bordure de la case bloquée */
         ChoisirCouleurDessin(CouleurParNom("black"));
-        for ( k = 0; k < border_thickness; k++) {
+        for (k = 0; k < border_thickness; k++) {
             DessinerRectangle(x_start + blockY * cell_size + k, y_start + blockX * cell_size + k, cell_size - 2 * k, cell_size - 2 * k);
         }
     }
