@@ -79,12 +79,12 @@ int main(void) {
                 if (modeJeu == 1) {
                     if (tourJoueur == 1) {  
                         if (etapePlacement == 1) { 
-                            afficherMessageGraphique("Joueur 1 : Placez votre pion.");
+                            
                             if (gererClicGrille(positionSourisX, positionSourisY, 1, choisirTaille)) {
                                 etapePlacement = 2;  
                             }
                         } else if (etapePlacement == 2) {  
-                            afficherMessageGraphique("Joueur 1 : Placez votre croix.");
+                            afficherMessageGraphique("");
                             if (gererClicGrille(positionSourisX, positionSourisY, 1, choisirTaille)) {
                                 etapePlacement = 1;  
                                 tourJoueur = 2;
@@ -101,12 +101,12 @@ int main(void) {
                 else if (modeJeu == 2) {
                     if (tourJoueur == 1) {  
                         if (etapePlacement == 1) {  
-                            afficherMessageGraphique("Joueur 1 : Placez votre pion.");
+                            
                             if (gererClicGrille(positionSourisX, positionSourisY, 1, choisirTaille)) {
                                 etapePlacement = 2;  
                             }
                         } else if (etapePlacement == 2) {  
-                            afficherMessageGraphique("Joueur 1 : Placez votre croix.");
+                            
                             if (gererClicGrille(positionSourisX, positionSourisY, 1, choisirTaille)) {
                                 etapePlacement = 1;  
                                 tourJoueur = 2;
@@ -120,12 +120,12 @@ int main(void) {
                     } 
                     else if (tourJoueur == 2) {  /* Tour du Joueur 2 */
                         if (etapePlacement == 1) {  
-                            afficherMessageGraphique("Joueur 2 : Placez votre pion.");
+                            
                             if (gererClicGrille(positionSourisX, positionSourisY, 2, choisirTaille)) {
                                 etapePlacement = 2;  
                             }
                         } else if (etapePlacement == 2) {  
-                            afficherMessageGraphique("Joueur 2 : Placez votre croix.");
+                            
                             if (gererClicGrille(positionSourisX, positionSourisY, 2, choisirTaille)) {
                                 etapePlacement = 1;  
                                 tourJoueur = 1;
