@@ -62,7 +62,7 @@ int main(void) {
 
                         initialiserJeu(choisirTaille);
                         afficherGrilleJeu(choisirTaille);
-                        afficherMessageGraphique("Joueur 1 : Placez votre pion.");
+                        
 
                        
                         etatJeu = 2; 
