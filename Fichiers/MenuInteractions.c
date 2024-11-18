@@ -80,7 +80,7 @@ void gererMouvement(int joueur, int x, int y, int newX, int newY, int taille) {
             printf("Le joueur %d a perdu !\n", joueur);
         }
     } else {
-        printf("Déplacement invalide. Vous ne pouvez déplacer le pion que vers une case adjacente libre.\n");
+        printf("Deplacement invalide. Vous ne pouvez déplacer le pion que vers une case adjacente libre.\n");
     }
 }
 
@@ -177,7 +177,7 @@ int gererClicGrille(int positionSourisX, int positionSourisY, int joueur, int ta
                 etapePlacement = 2;
                 return 1;  
             } else {
-                afficherMessageGraphique("Déplacement invalide. Case non adjacente.");
+                afficherMessageGraphique("Deplacement invalide. Case non adjacente.");
                 return 0;  
             }
         } else if (etapePlacement == 2) {  
@@ -196,7 +196,7 @@ int gererClicGrille(int positionSourisX, int positionSourisY, int joueur, int ta
                 tourJoueur = (tourJoueur == 1) ? 2 : 1;  /* Change de joueur */
                 return 1;  /* Placement de croix valide */
             } else {
-                afficherMessageGraphique("Case occupée. Choisissez une autre case pour la croix.");
+                
                 return 0;  /* Mouvement invalide */
             }
         }
