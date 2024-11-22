@@ -143,7 +143,7 @@ int gererClicGrille(int positionSourisX, int positionSourisY, int joueur, int ta
                 oldY = (joueur == 1) ? joueur1Y : joueur2Y;
 
                 /* Efface la position précédente si ce n'est pas le premier coup */
-                if (!isFirstMove && grille[oldX][oldY] != 'X') {
+                if (!isFirstMove && oldX >= 0 && oldY >= 0 && grille[oldX][oldY] != 'X') {
                     grille[oldX][oldY] = ' ';  
                     ChoisirCouleurDessin(CouleurParNom("white"));
                     RemplirRectangle(x_start + oldY * cell_size, y_start + oldX * cell_size, cell_size, cell_size);
@@ -160,6 +160,7 @@ int gererClicGrille(int positionSourisX, int positionSourisY, int joueur, int ta
                     joueur1X = ligne;  
                     joueur1Y = colonne;
                     grille[ligne][colonne] = 'A';
+               
                 } else {
                     joueur2X = ligne;  
                     joueur2Y = colonne;
@@ -174,7 +175,7 @@ int gererClicGrille(int positionSourisX, int positionSourisY, int joueur, int ta
                                    y_start + ligne * cell_size + (cell_size - sprite_size) / 2);
                 }
 
-                etapePlacement = 2;
+                etapePlacement = 1;
                 return 1;  
             } else {
                 afficherMessageGraphique("Deplacement invalide. Case non adjacente.");
