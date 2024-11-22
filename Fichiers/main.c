@@ -10,6 +10,7 @@
 #include "Recommencer.h"
 #include "constantes.h"
 #include "MenuAffichage.h"  
+#include "PlacementInitial.h"
 
 int main(void) {
     int positionSourisX, positionSourisY;
@@ -63,7 +64,7 @@ int main(void) {
                         initialiserJeu(choisirTaille);
                         afficherGrilleJeu(choisirTaille);
                         
-
+placerPionsInitialement(choisirTaille); /*ajt du placment avatn le lacement du jeu*/
                        
                         etatJeu = 2; 
                         tourJoueur = 1;
