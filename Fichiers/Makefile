@@ -15,7 +15,8 @@ OFILES = AffichageGrille.o \
          MenuOption.o \
          Recommencer.o \
          Score.o \
-         Sprites.o
+         Sprites.o \
+         PlacementInitial.o
 
 ### BUT PAR DÉFAUT ###
 
@@ -31,7 +32,7 @@ AffichageGrille.o : AffichageGrille.c AffichageGrille.h constantes.h
 CreationGrille.o : CreationGrille.c CreationGrille.h constantes.h
 	$(CC) $(CFLAGS) -c CreationGrille.c
 
-main.o : main.c Menu.h AffichageGrille.h CreationGrille.h MenuAffichage.h MenuInteractions.h MenuOption.h Recommencer.h Score.h Sprites.h constantes.h
+main.o : main.c Menu.h AffichageGrille.h CreationGrille.h MenuAffichage.h MenuInteractions.h MenuOption.h Recommencer.h Score.h Sprites.h constantes.h PlacementInitial.h
 	$(CC) $(CFLAGS) -c main.c
 
 Menu.o : Menu.c Menu.h constantes.h
@@ -54,6 +55,9 @@ Score.o : Score.c Score.h constantes.h
 
 Sprites.o : Sprites.c Sprites.h constantes.h
 	$(CC) $(CFLAGS) -c Sprites.c
+
+PlacementInitial.o : PlacementInitial.c PlacementInitial.h
+	$(CC) $(CFLAGS) -c PlacementInitial.c
 
 # Génération de l'exécutable
 ${EXE} : ${OFILES}
